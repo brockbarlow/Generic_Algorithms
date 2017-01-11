@@ -6,6 +6,13 @@ def main(): #Main parser function.
 	file = "CNFExpressions.txt"; #Name of the file being used.
 	inFile = open(file, 'r'); #Open the file and read it.
 	
+	print("Question Mark ? = NOT"); #Display to the user what the question mark represents.
+	print("Capital V = OR"); #Display to the user what the capital V represents.
+	print("Ampersand & = AND"); #Display to the user what the Ampersand represents.
+	print("Open Bracket { = BEGIN CLAUSE"); #Display to the user what the open bracket represents.
+	print("Close Bracket } = END CLAUSE"); #Display to the user what the close bracket represents.
+	print("\n"); #Add a new line.
+	
 	for string in inFile: #For every string, do the following.
 		
 		if (inFile): #If these are present in the file...
@@ -46,22 +53,20 @@ def main(): #Main parser function.
 						continue; #move on.
 					literals.append(char); #Otherwise, add the character to the literals list.
 	
-	literals.sort(); #Sort thought the literals list.
+		literals.sort(); #Sort thought the literals list.
+	
+		print(string); #Display the string.
+	
+		print("Number of ANDs: ", numOfAnds); #Display the number of ANDs within the string.
+		print("Number of NOTs: ", numOfNots); #Display the number of NOTs within the string.
+		print("Number of ORs: ", numOfOrs); #Display the number of ORs within the string.
+	
+		print("Number of literals: ", len(literals)); #Display the number of literals within the string.
+		print("Literals: ", literals); #Display the literals being used within the string.
+	
+		print("Number of clauses: ", numOfClauses); #Display the number of clauses within the string.
+		print("\n"); #Add a new line.
 	
 	inFile.close(); #Close the file.
 	
-	print(string); #Display the string.
-	print("\n"); #Add a new line.
-	
-	print("Number of ANDs: ", numOfAnds); #Display the number of ANDs within the string.
-	print("Number of NOTs: ", numOfNots); #Display the number of NOTs within the string.
-	print("Number of ORs: ", numOfOrs); #Display the number of ORs within the string.
-	print("\n"); #Add a new line.
-	
-	print("Number of literals: ", len(literals)); #Display the number of literals within the string.
-	print("Literals: ", literals); #Display the literals being used within the string.
-	print("\n"); #Add a new line.
-	
-	print("Number of clauses: ", numOfClauses); #Display the number of clauses within the string.
-	print("\n"); #Add a new line.
 main() #End of main function.
