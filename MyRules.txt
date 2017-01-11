@@ -1,0 +1,5 @@
+#Question Mark ? = NOT
+#Capital V = OR
+#Ampersand & = AND
+#Open Bracket { = BEGIN CLAUSE
+#Close Bracket } = END CLAUSE
