@@ -6,14 +6,12 @@ def main():
 	#read file
 	file = "CNFExpressions.txt"
 	inFile = open(file, 'r')
-	lines = inFile.readlines()
-	inFile.close()
+	for string in inFile:
+		if (inFile):
+			clauses = 0;
+			literals = [];
+			
 	
-	#placeholder
-	#
-	
-	#display results
-	print(inFile)
 main()
 
 #print("CNF Expressions", inFile)
@@ -22,3 +20,12 @@ main()
 #	if(inFile):
 #		count+=1
 #		print(count, ":", i)
+
+#lines = inFile.readlines()
+	#inFile.close()
+	
+	#placeholder
+	#
+	
+	#display results
+	#print(inFile)
