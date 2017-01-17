@@ -2,6 +2,8 @@
 #made by: Brock Barlow
 #date created: 1/11/2017
 
+import sys #import system.
+
 def main(): #Main parser function.
 	file = "CNFExpressions.txt"; #Name of the file being used.
 	inFile = open(file, 'r'); #Open the file and read it.
@@ -18,11 +20,20 @@ def main(): #Main parser function.
 		if (inFile): #If these are present in the file...
 			
 			numOfClauses = 0; #Number of clauses in the string.
-			literals = []; #Number of literals in the string.
+			literals = []; #List of literals in the string.
 			openClause = 0; #Is there an open clause in the string?
 			numOfNots = 0; #Number of NOTs present in the string.
 			numOfOrs = 0; #Number of ORs present in the string.
 			numOfAnds = 0; #Number of ANDs present in the string.
+			
+			
+			literalDictionary = {'a' : 1, 'b' : 0, 'c' : 1}; #Defining what the literals are. One means true and zero means false.
+			trueLiterals = 0; #Number of TRUE literals (if literal equals one).
+			falseLiterals = 0; #Number of FALSE literals (if literal equals zero).
+			fitnessScore = 0; #Fitness score of the expression.
+			totalClauses = 0; #Total number of clauses.
+			expressions = []; #List of expressions in the text file.
+			
 			
 			for char in string: #For every character in the string, do the following.
 			
@@ -48,6 +59,19 @@ def main(): #Main parser function.
 					numOfClauses += 1; #increment the Number of Clauses variable and...
 					openClause = 0; #set the openClause variable to zero.
 				
+				
+				#elif char == 'a': #If the character is the a literal...
+					#trueLiterals += 1; #increment the trueLiterals variable.
+				#elif char == 'b': #if the character is the b literal...
+					#falseLiterals += 1; #increment the falseLiterals variable.
+				#elif char == 'c': #If the character is the c literal...
+					#trueLiterals += 1; #increment the trueLiterals variable.
+				#elif char == 'a' and numOfNots == 1:
+					#falseLiterals = 1;
+					#numOfNots = 0;
+				
+				
+				
 				else: 
 					if char in literals: #If the character in the literals list is already present...
 						continue; #move on.
@@ -65,6 +89,11 @@ def main(): #Main parser function.
 		print("Literals: ", literals); #Display the literals being used within the string.
 	
 		print("Number of clauses: ", numOfClauses); #Display the number of clauses within the string.
+		
+		
+		#print("True Literals: ", trueLiterals); #display true literals.
+		
+		
 		print("\n"); #Add a new line.
 	
 	inFile.close(); #Close the file.
