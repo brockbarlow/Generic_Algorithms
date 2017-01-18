@@ -5,10 +5,17 @@
 
 import sys #import system.
 
-def findLiteralIndex(): #This function finds the index value of the literal. Used to convert the literal character value into a chromosome integer value.
-	#
-findLiteralIndex(); #End of the findLiteralIndex function.
-
+def findLiteralIndex(list, data): #This function finds the index value of the literal. Used to convert the literal character value into a chromosome integer value. This function takes in the literalList and char data values.
+	int = 0; #Integer variable. Equals zero. Will remain zero as long as the item within the list is equal to the character data.
+	
+	for item in list: #For every item in the list, do the following.
+		
+		if item == data: #If the item is equal to the character data...
+			return int; #return the integer variable.
+		
+		else: #Otherwise...
+			int += 1; #Increment the integer variable.
+			
 def main(): #Main parser function.
 	#fileOne = "CNFExpressions.txt"; #Name of the file being used. Main file.
 	fileTwo = "TestCNFExpression.txt"; #Name of the file being used. Test file.
@@ -21,7 +28,7 @@ def main(): #Main parser function.
 	#print("Close Bracket } = END CLAUSE"); #Display to the user what the close bracket represents.
 	#print("\n"); #Add a new line.
 	
-	for string in inFile: #For every string, do the following.
+	for string in inFile: #For every string in the file, do the following.
 		
 		if (inFile): #If these are present in the file...
 			
@@ -33,7 +40,7 @@ def main(): #Main parser function.
 			
 			literalList = []; #List of literals in the string.
 			clauseList = []; #List of clauses in the string.
-			literalValues = [1, 0, 1, 0, 1, 0]; #Holds the chromosome values of the literals being used. a = 1, b = 0, c = 1, d = 0, e = 1, f = 0. This value will get overwritten.
+			literalValues = []; #Holds the chromosome values of the literals being used. a = 1, b = 0, c = 1, d = 0, e = 1, f = 0. This value will get overwritten.
 			withinClause = "false"; #Bool variable. If processing data in a clause then this will equal true. Otherwise, this variable will always equal false.
 			stringDataHolder = ""; #Holds string data. Starts empty.
 			tempStringDataHolder = ""; #Holds string data. Used to temporary hold data. Starts empty.
@@ -71,8 +78,10 @@ def main(): #Main parser function.
 				
 				elif withinClause == "true": #If withinClause is equal to true...
 					stringDataHolder += char; #increment the stringDataHolder variable with the char value.
+					
 					if char in literalList: #If the character in the literals list is already present...
 						continue; #move on.
+						
 					literalList.append(char); #Otherwise, add the character to the literals list.
 				
 				elif char == '}' and withinClause == "true": #If the character is an Close Bracket and we are within the clause...
@@ -80,12 +89,15 @@ def main(): #Main parser function.
 					clauseList.append(stringDataHolder); #add the stringDataHolder variable value(s) to the clause list.
 					stringDataHolder = ""; #clear the stringDataHolder variable.
 				
-				#else: 
+				#else: #Otherwise...
+					
 					#if char in literals: #If the character in the literals list is already present...
 						#continue; #move on.
+						
 					#literals.append(char); #Otherwise, add the character to the literals list.
 					
 			for string in clauseList: #For every string in the clause list, do the following.
+				
 				for char in string: #For every character in the string, do the following.
 				
 					if char == '?': #If the character is a Question Mark...
@@ -97,8 +109,26 @@ def main(): #Main parser function.
 					elif char == '&': #If the character is an Ampersand...
 						tempStringDataHolder += char; #increment the tempStringDataHolder variable with the char value.
 						
-					else:
+					else: #Otherwise...
 						literalIndexValue = findLiteralIndex(literalList, char); #The literalIndexValue will equal the result of the findLiteralIndex function.
+						tempStringDataHolder += str(literalValues[literalIndexValue]); #Increment the tempStringDataHolder variable with the string converted literalValues value.
+			
+				for char in tempStringDataHolder: #For every character in the tempStringDataHolder variable, do the following.
+				
+					if char == '?' and inverseValue == "false": #If the character is a Question Mark and the inverseValue is equal to false...
+						inverseValue = "true"; #the inverseValue will become true.
+						
+					elif inverseValue == "true": #If the inverseValue equals true...
+						
+						if char == '1': #If the character value is equal to one...
+							chromosomeStringDataHolder += str(0); #increment the chromosomeStringDataHolder variable with the string converted, inverted value of one.
+							
+						elif char == '0': #If the character value is equal to zero...
+							chromosomeStringDataHolder += str(1); #increment the chromosomeStringDataHolder variable with the string converted, inverted value of zero.
+							inverseValue = "false"; #Turn the inverseValue variable false.
+							
+					else: #Otherwise...
+						chromosomeStringDataHolder += char; #increment the chromosomeStringDataHolder variable with the character value.
 			
 		#literalList.sort(); #Sort thought the literals list.
 	
@@ -111,6 +141,6 @@ def main(): #Main parser function.
 		#print("Number of clauses: ", numOfClauses); #Display the number of clauses within the string.
 		#print("\n"); #Add a new line.
 	
-	inFile.close(); #Close the file.
+	#inFile.close(); #Close the file.
 	
 main(); #End of main function.
