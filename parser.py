@@ -5,6 +5,10 @@
 
 import sys #import system.
 
+def findLiteralIndex(): #This function finds the index value of the literal. Used to convert the literal character value into a chromosome integer value.
+	#
+findLiteralIndex(); #End of the findLiteralIndex function.
+
 def main(): #Main parser function.
 	#fileOne = "CNFExpressions.txt"; #Name of the file being used. Main file.
 	fileTwo = "TestCNFExpression.txt"; #Name of the file being used. Test file.
@@ -29,12 +33,13 @@ def main(): #Main parser function.
 			
 			literalList = []; #List of literals in the string.
 			clauseList = []; #List of clauses in the string.
-			literalValues = [1, 0, 1]; #Defines the values of the literals being used. a = 1, b = 0, c = 1.
+			literalValues = [1, 0, 1, 0, 1, 0]; #Holds the chromosome values of the literals being used. a = 1, b = 0, c = 1, d = 0, e = 1, f = 0. This value will get overwritten.
 			withinClause = "false"; #Bool variable. If processing data in a clause then this will equal true. Otherwise, this variable will always equal false.
 			stringDataHolder = ""; #Holds string data. Starts empty.
 			tempStringDataHolder = ""; #Holds string data. Used to temporary hold data. Starts empty.
 			chromosomeStringDataHolder = ""; #Holds the converted string data. Starts empty.
 			inverseValue = "false"; #Bool variable. If true, inverse the data. Otherwise, don't inverse.
+			literalIndexValue = 0; #Holds the chromosome values of the literal values.
 			
 			for char in string: #For every character in the string, do the following.
 			
@@ -91,9 +96,11 @@ def main(): #Main parser function.
 						
 					elif char == '&': #If the character is an Ampersand...
 						tempStringDataHolder += char; #increment the tempStringDataHolder variable with the char value.
+						
+					else:
+						literalIndexValue = findLiteralIndex(literalList, char); #The literalIndexValue will equal the result of the findLiteralIndex function.
 			
-					
-		literalList.sort(); #Sort thought the literals list.
+		#literalList.sort(); #Sort thought the literals list.
 	
 		#print(string); #Display the string.
 		#print("Number of ANDs: ", numOfAnds); #Display the number of ANDs within the string.
@@ -106,4 +113,4 @@ def main(): #Main parser function.
 	
 	inFile.close(); #Close the file.
 	
-main() #End of main function.
+main(); #End of main function.
