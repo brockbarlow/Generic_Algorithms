@@ -1,6 +1,7 @@
 #python parser script 
 #made by: Brock Barlow
 #date created: 1/11/2017
+#final due date: 1/25/2017
 
 import sys #import system.
 
@@ -30,21 +31,24 @@ def main(): #Main parser function.
 			clauseList = []; #List of clauses in the string.
 			literalValues = [1, 0, 1]; #Defines the values of the literals being used. a = 1, b = 0, c = 1.
 			withinClause = "false"; #Bool variable. If processing data in a clause then this will equal true. Otherwise, this variable will always equal false.
-			dataHolder = ""; #Holds data from the "for char in string" for loop.
+			stringDataHolder = ""; #Holds string data. Starts empty.
+			tempStringDataHolder = ""; #Holds string data. Used to temporary hold data. Starts empty.
+			chromosomeStringDataHolder = ""; #Holds the converted string data. Starts empty.
+			inverseValue = "false"; #Bool variable. If true, inverse the data. Otherwise, don't inverse.
 			
 			for char in string: #For every character in the string, do the following.
 			
 				if char == '?' and withinClause == "true": #If the character is a Question Mark and we are within the clause...
 					#numOfNots += 1; #increment the NOTs variable.
-					dataHolder += '~'; #increment the dataHolder variable with the inverse operator. The tilde operator "inverts" a value. Example: x = 1. ~x = -1.
+					stringDataHolder += char; #increment the stringDataHolder variable with the char value.
 				
 				elif char == 'V' and withinClause == "true": #If the character is a Capital V and we are within the clause...
 					#numOfOrs += 1; #increment the ORs variable.
-					dataHolder += char; #increment the dataHolder variable with the char value.
+					stringDataHolder += char; #increment the stringDataHolder variable with the char value.
 				
 				elif char == '&' and withinClause == "true": #If the character is an Ampersand and we are within the clause...
 					#numOfAnds += 1; #increment the ANDs variable.
-					dataHolder += char; #increment the dataHolder variable with the char value.
+					stringDataHolder += char; #increment the stringDataHolder variable with the char value.
 				
 				elif char == ' ': #If the character is a space...
 					continue; #move on to the next character.
@@ -61,25 +65,35 @@ def main(): #Main parser function.
 					#openClause = 0; #set the openClause variable to zero.
 				
 				elif withinClause == "true": #If withinClause is equal to true...
-					dataHolder += char; #increment the dataHolder variable with the char value.
+					stringDataHolder += char; #increment the stringDataHolder variable with the char value.
 					if char in literalList: #If the character in the literals list is already present...
 						continue; #move on.
 					literalList.append(char); #Otherwise, add the character to the literals list.
 				
 				elif char == '}' and withinClause == "true": #If the character is an Close Bracket and we are within the clause...
 					withinClause = "false"; #change the withinClause value to false.
-					clauseList.append(dataHolder); #add the dataHolder variable value(s) to the clause list.
-					dataHolder = ""; #clear the dataHolder variable.
+					clauseList.append(stringDataHolder); #add the stringDataHolder variable value(s) to the clause list.
+					stringDataHolder = ""; #clear the stringDataHolder variable.
 				
 				#else: 
 					#if char in literals: #If the character in the literals list is already present...
 						#continue; #move on.
 					#literals.append(char); #Otherwise, add the character to the literals list.
 					
-			#end of this for loop.
+			for string in clauseList: #For every string in the clause list, do the following.
+				for char in string: #For every character in the string, do the following.
+				
+					if char == '?': #If the character is a Question Mark...
+						tempStringDataHolder += char; #increment the tempStringDataHolder variable with the char value.
+						
+					elif char == 'V': #If the character is a Capital V...
+						tempStringDataHolder += char; #increment the tempStringDataHolder variable with the char value.
+						
+					elif char == '&': #If the character is an Ampersand...
+						tempStringDataHolder += char; #increment the tempStringDataHolder variable with the char value.
 			
 					
-		literals.sort(); #Sort thought the literals list.
+		literalList.sort(); #Sort thought the literals list.
 	
 		#print(string); #Display the string.
 		#print("Number of ANDs: ", numOfAnds); #Display the number of ANDs within the string.
