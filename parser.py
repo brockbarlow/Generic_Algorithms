@@ -7,21 +7,22 @@
 import sys #import system.
 import random #import random.
 
+#Classes.
+
+
 #Functions.			
 def Print(list): #Print function. Takes in a list.
 	for item in list: #For every item in the list...
 		print(item); #print the item.
 
 def Main(): #Main function.
-	#Files.
-	fileOne = "CNFExpressions.txt"; #Name of file one. Holds cnf expressions.
-	fileTwo = "TestCNFExpression.txt"; #Name of file two. Holds a test cnf expression.
-	inFileOne = open(fileOne, 'r'); #Open and read file one.
-	inFileTwo = open(fileTwo, 'r'); #Open and read file two.
+	#File.
+	file = "CNFExpression.txt"; #Name of file. Holds a test cnf expression.
+	inFile = open(file, 'r'); #Open and read file.
 	
-	for string in inFileTwo: #For every string in file two, do the following.
+	for string in inFile: #For every string in file, do the following.
 		
-		if(inFileTwo): #If in the file...
+		if(inFile): #If in the file...
 			
 			#Lists.
 			clauseList = []; #List of clauses in the expression.
