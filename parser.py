@@ -98,3 +98,4 @@ def Main(): #Main function.
 								
 			print(string);
 			print("Solution: " + solution.value);
+Main();
