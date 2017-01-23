@@ -1,7 +1,7 @@
-#python parser script, main file.
-#made by: Brock Barlow.
-#date created: 1/11/2017.
-#final due date: 1/25/2017.
+#Generic Algorithm Parser Script, Main File.
+#Made by: Brock Barlow.
+#Date created: 1/11/2017.
+#Final due date: 1/25/2017.
 
 #Imports.
 import sys #import system.
@@ -9,9 +9,63 @@ import random #import random.
 import time #import time.
 
 #Classes.
+class Canidate(object): #Canidate class.
+	def __init__(self, case): #Initial function.
+		dataString = ""; #Data string.
+		for data in case: #For every piece of data in the case, do the following.
+			dataString += data; #Increment the data value to the data string.
+		self.value = dataString; #Value variable will equal the data string value.
+		
+	def EvaluateData(self, case, list, object): #Evaluate data function.
+		dataList = []; #List of data.
+		tempDataString = ""; #Temporary data string.
+		dataString = ""; #Data string.
+		chromosomeValue = None; #Chromosome value variable.
+		canInverse = "false"; #Inverse bool variable.
+		
+		for string in case: #For every string in the case, do the following.
+			for char in string: #For every character in the string, do the following.
+				if char == ' ': #If the character equals a space...
+					continue; #move on to the next character.
+				elif char == '&': #If the character equals an ampersand...
+					continue; #move on to the next character.
+				elif char == '\n': #If the character equals a new line...
+					continue; #move on to the next character.
+				elif char == '}': #If the character equals an closed bracket...
+					tempDataString += char; #increment the character value to the temporary data string.
+					dataList.append(tempDataString); #add the temporary data string value to the data list.
+					tempDataString = ""; #clear the temporary data list.
+				else: #Otherwise,
+					if char != '{' and char != '?' and char != 'V' and char != '&': #If the character does not equal any of the stated characters...
+						tempDataString += object.value[FindIndex(list, char)] #increment the objects value to the temporary data string.
+					else: #Otherwise,
+						tempDataString += char; #increment the character value to the temporary data string.
+						
+		for string in dataList: #For every string in the data list, do the following.
+			for char in string: #For every character in the string, do the following.
+				if canInverse == "true": #If the canInverse variable is true...
+					if char == '1': #If the character equals one...
+						dataString += '0'; #convert the one to a zero and increment it.
+					elif char == '0': #If the character equals zero...
+						dataString += '1'; #convert the zero to a one and increment it.
+					canInverse = "false"; #change the canInverse variable to false.
+				else: #Otherwise,
+					if char == "?"; #If the character equals a question mark...
+						canInverse = "true"; #change the canInverse variable to true.
+					else: #Otherwise,
+						dataString += char; #increment the character value to the data string.
+			dataList[FindIndex(dataList, string)] = dataString; #The data list equals the data string.
+			dataString = ""; #Clear the data string variable.
 
+#Functions.
+def FindIndex(list, case): #Find index function.
+	itemHolder = None; #Item holder variable.
+	for item in list: #For every item in the list, do the following.
+		if item == case; #If the item is equal to the case...
+			return itemHolder; #return the count variable.
+		else: #Otherwise,
+			itemHolder += 1; #increment the item holder variable.
 
-#Functions.	
 def Main(): #Main function.
 	#File.
 	file = "CNFExpression.txt"; #Name of file. Holds a test cnf expression.
@@ -77,6 +131,6 @@ def Main(): #Main function.
 			#print("\n"); #Prints a new line.
 			#print(clauseList); #Displays clauses within list.
 			#print("\n"); #Prints a new line.
-			print(expressionString); #Displays the expression within the file.
-			print("\n"); #Prints a new line.
+			#print(expressionString); #Displays the expression within the file.
+			#print("\n"); #Prints a new line.
 Main(); #End of main function.
