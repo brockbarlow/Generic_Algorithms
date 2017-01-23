@@ -46,3 +46,55 @@ def Main(): #Main function.
 					if char in literalList: #If the character is in the literal list...
 						continue; #move on.
 					literalList.append(char); #otherwise, add the character to the literal list.
+					
+			populationList = [];
+			populationList = GenerateValues(len(literalList));
+			solution = None;
+			foundSolution = 0;
+			while(foundSolution == 0):
+				for canidate in populationList:
+					if canidate.EvaluateData(clauseList, literalList, canidate) >= 1:
+						print(canidate.EvaluateData(clauseList, literalList, canidate));
+						solution = canidate;
+						foundSolution = 1;
+						break;
+				breedableList = [];
+				for canidate in populationList:
+					breedableList.append(canidate);
+				newPopulationList = [];
+				populationCounter = len(breedableList);
+				for parent in range(0, populationCounter / 2):
+					parentOne = breedableList[parent];
+					parentTwo = Canidate("");
+					active = "true";
+					while active == "true":
+						parentTwo = breedableList[random.randrange(parent, len(breedableList))];
+						if parentTwo in breedableList:
+							active = "false";
+					childOne = Canidate(parentTwo.InverseOffspring(literalList, AddToList(parentTwo)));
+					childTwo = Canidate(parentOne.InverseOffspring(literalList, AddToList(parentOne)));
+					newPopulationList.append(childOne);
+					newPopulationList.append(childTwo);
+					if parentOne in breedableList:
+						breedableList.remove(parentOne);
+					if parentTwo in breedableList:
+						breedableList.remove(parentTwo);
+					for canidate in newPopulationList:
+						bitString = "";
+						for bit in canidate.value:
+							bitString += bit;
+						canidate.value = bitString;
+				for newCanidate in newPopulationList:
+					newCanidate.value = newCanidate.MutateValues(14);
+					populationList.append(newCanidate);
+				finalPopulationList = [];
+				for canidate in populationList:
+					if len(finalPopulationList) < 4:
+						finalPopulationList.append(canidate);
+					else:
+						for check in finalPopulationList:
+							if canidate.EvaluateData(clauseList, literalList, canidate) > check.EvaluateData(clauseList, literalList, canidate):
+								check = canidate;
+								
+			print(string);
+			print("Solution: " + solution.value);

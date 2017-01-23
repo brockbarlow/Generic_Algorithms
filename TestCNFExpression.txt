@@ -1,1 +1,1 @@
-{a V b} & {c V d} & {?a V c} & {?d V b} & {?a V ?d} & {a V ?e} & {?b V e} & {b V e}
+{a V b} & {c V d} & {?a V ?d} & {a V ?e} & {?b V e} & {b V e}

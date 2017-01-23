@@ -11,10 +11,23 @@ from classes import * #import everything from classes python file.
 def FindIndex(list, case): #Find index function. Takes in a list and case.
 	counter = 0; #Count variable.
 	for item in list: #For every item in the list...
-		if item == case; #If the item is equal to the case...
+		if item == case: #If the item is equal to the case...
 			return counter; #return the count variable.
 		else: #Otherwise,
 			counter += 1; #increment the count variable.
+			
+def GenerateValues(itemLength):
+	valueList = [];
+	for value in range(0, 4):
+		tempString = Canidate("");
+		for bit in range(0, itemLength):
+			rand = random.randrange(0, 100, 1);
+			if rand < 49:
+				tempString.value += '1';
+			else:
+				tempString.value += '0';
+		valueList.append(tempString);
+	return valueList;
 			
 def AddToList(item): #Add to list function. Takes in a item.
 	list = []; #List of items.
