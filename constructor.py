@@ -3,9 +3,11 @@
 #date created: 1/21/2017.
 #final due date: 1/25/2017.
 
+#Imports.
 import sys #import system.
 import random #import random.
 
+#Classes.
 class Canidate(object):
 	def __init__(self, string):
 		bitString = "";
@@ -19,11 +21,11 @@ class Canidate(object):
 		for string in clauseList:
 			for char in string:
 				if char == '?':
-					tempString += char;
+					tempString += '?';
 				elif char == '&':
-					tempString += char;
+					tempString += '&';
 				elif char == 'V':
-					tempString += char;
+					tempString += 'V';
 				else:
 					index = FindIndex(literalList, char);
 					tempString += str(value.value[index]);
@@ -71,6 +73,7 @@ class Canidate(object):
 			bitString += bit;
 		return bitString;
 		
+#Functions.
 def FindIndex(list, case): #Find index function. Takes in a list and case.
 	counter = 0; #Count variable.
 	for item in list: #For every item in the list...
@@ -79,8 +82,8 @@ def FindIndex(list, case): #Find index function. Takes in a list and case.
 		else: #Otherwise,
 			counter += 1; #increment the count variable.
 			
-def GenerateValues(itemLength):
-	valueList = [];
+def GenerateValues(itemLength): #Generate values function. Takes in the length of an item.
+	valueList = []; #Value list.
 	for value in range(0, 4):
 		tempString = Canidate("");
 		for bit in range(0, itemLength):
