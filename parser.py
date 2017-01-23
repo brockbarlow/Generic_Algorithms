@@ -6,7 +6,8 @@
 #Imports.
 import sys #import system.
 import random #import random.
-			
+
+#Functions.			
 def Print(list): #Print function. Takes in a list.
 	for item in list: #For every item in the list...
 		print(item); #print the item.
@@ -31,12 +32,6 @@ def Main(): #Main function.
 			
 			#Bools.
 			withinClause = "false"; #Bool variable. Used to identify if we're in a clause or not. Starts false.
-			
-			#Chromosome related variables.
-			parentOne = None; #First parent chromosome.
-			parentTwo = None; #Second parent chromosome.
-			childOne = None; #First child chromosome.
-			childTwo = None; #Second child chromosome.
 			
 			for char in string: #For each character in the string, do the following.
 				
@@ -65,5 +60,10 @@ def Main(): #Main function.
 					evaluationString += char; #increment the character to the evaluation string.
 					if char in literalList: #If the character is in the literal list...
 						continue; #move on.
-					literalList.append(char); #otherwise, add the character to the literal list.					
+					literalList.append(char); #otherwise, add the character to the literal list.
+					
+			Print(literalList); #Prints out the list of literals.
+			print("\n"); #Prints new line.
+			Print(clauseList); #Prints out the list of clauses.
+			print("\n"); #Prints new line.
 Main(); #End of main function.
