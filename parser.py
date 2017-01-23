@@ -7,8 +7,6 @@ import sys #import system.
 import random #import random.
 import classes #import classes python file.
 from classes import * #import everything from classes python file.
-import functions #import functions python file.
-from functions import * #import everything from functions python file.
 
 def Main(): #Main function.
 	fileOne = "CNFExpressions.txt"; #Name of file one. Holds cnf expressions.
