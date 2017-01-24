@@ -136,13 +136,27 @@ def Main(): #Main function.
 			clauseList = []; #List of clauses in the expression.
 			literalList = []; #List of literals in the expression.
 			populationList = []; #List of populations.
+			breedList = []; #List of breedable canidates.
+			newPopulationList = []; #List of new populations.
+			finalizedPopulationList = []; #List of finalized populations.
 			
 			#Strings.
 			evaluationString = ""; #Holds data after evaluating the file.
 			expressionString = ""; #Holds the clause(s) of the expression.
 			
 			#Bools.
-			withinClause = "false"; #Bool variable. Used to identify if we're in a clause or not. Starts false.
+			withinClause = "false"; #Used to identify if we're in a clause or not. Starts false.
+			isActive = "true"; #Used for checking parents. Starts true.
+			
+			#Data holders.
+			foundSolution = None; #Found solution variable.
+			solution = None; #Solution variable.
+			generation = None; #Generation variable.
+			populationCounter = None; #Population counter variable.
+			parentOne = None; #First parent variable.
+			parentTwo = None; #Second parent variable.
+			childOne = None; #First child variable.
+			childTwo = None; #Second child variable.
 			
 			for char in string: #For each character in the string, do the following.
 				
@@ -180,6 +194,7 @@ def Main(): #Main function.
 				expressionString += string; #Increment the string data to the expression string variable.
 			
 			#Part two: Generate offspring and mutations.
+			populationList = GenerateValues(len(literalList), 16) #The population list will equal value(s) from the generate values function.
 			
 			
 			#Results.
