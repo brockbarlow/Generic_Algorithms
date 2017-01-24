@@ -54,8 +54,43 @@ class Canidate(object): #Canidate class.
 						canInverse = "true"; #change the canInverse variable to true.
 					else: #Otherwise,
 						dataString += char; #increment the character value to the data string.
-			dataList[FindIndex(dataList, string)] = dataString; #The data list equals the data string.
+			dataList[FindIndex(dataList, string)] = dataString; #The data list (which uses the find index function) equals the data string.
 			dataString = ""; #Clear the data string variable.
+			
+		for data in dataList: #For every piece of data in the data list, do the following.
+			chromosomeValue += eval(data); #Increment the chromosome value variable with the evaluated data.
+		return chromosomeValue / float(len(dataList)); #Return the chromosome value divided by the float converted data list length.
+		
+	def InverseOffspring(self, list, value): #Inverse (flip) offspring function.
+		for data in range(len(list) / 2, len(list)): #For every piece of data in the range of the list length, do the following.
+			if value[data] == '0'; #If the data value is equal to zero...
+				value[data - (len(list) / 2)] = '1'; #value will equal one.
+			elif value[data] == '1'; #If the data value is equal to one...
+				value[data - (len(list) / 2)] = '0'; #value will equal zero.
+			return value; #Return the value.
+			
+	def MutateValues(self, chanceValue): #Mutate value function.
+		dataList = []; #List of data.
+		dataString = ""; #Data string.
+		
+		for data in self.value: #For every piece of data in value, do the following.
+			if random.randrange(1, 101, 1) <= chanceValue: #If the random range is less than or equal to the chance value...
+				if data == '1': #If data is equal to one...
+					dataList.append('0'); #add zero to the data list.
+				elif data == '0': #if data is equal to zero...
+					dataList.append('1'); #add one to the data list.
+			else: #Otherwise,
+				dataList.append(data); #add data to the data list.
+				
+		for data in dataList: #For every piece of data in the data list, do the following.
+			dataString += data; #Increment the data string variable with the data value.
+		return dataString; #Return the data string variable.
+		
+	def DisplayCanidate(self, case, value): #Display (print) function.
+		print("The expression: " + case); #Print the expression.
+		print("The value: " + self.value); #Print the value.
+		print("The fittness score: " + str(value)); #Print the fittness score.
+		print("\n"); #Print a new line.
 
 #Functions.
 def FindIndex(list, case): #Find index function.
@@ -65,6 +100,27 @@ def FindIndex(list, case): #Find index function.
 			return itemHolder; #return the count variable.
 		else: #Otherwise,
 			itemHolder += 1; #increment the item holder variable.
+			
+def GenerateValues(listLength, max): #Generate values function.
+	valueList = []; #List of values.
+	tempDataString = ""; #Temporary data string.
+	
+	for value in range(0, max): #For every value in the defined range, do the following.
+		tempDataString = Canidate(""); #Temporary data string equals an canidate object.
+		for data in range(0, listLength): #For every piece of data in the defined range, do the following.
+			rand = random.randrange(0, 100, 1); #rand variable will equal the defined random range.
+			if rand < 49: #If the rand variable value is less than forty nine...
+				tempDataString.value += '1'; #temporary data string's value increments a value of one.
+			else: #Otherwise,
+				tempDataString.value += '0'; #temporary data string's value increments a value of zero.
+		valueList.append(tempDataString); #add the temporary data string value to the value list.
+	return valueList; #Return the value list.
+	
+def AddToList(object): #Add to list function.
+	objectList = []; #List of objects.
+	for char in object.value: #For every character in the objects value, do the following.
+		objectList.append(char); #Add the character to the object list.
+	return objectList; #Return the object list.
 
 def Main(): #Main function.
 	#File.
