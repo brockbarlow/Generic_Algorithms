@@ -130,15 +130,11 @@ def Main(): #Main function.
 	#Part one: Parser the file and evaluate the data within.
 	for string in inFile: #For every string in file, do the following.
 		
-		if(inFile): #If in the file...
+		if inFile: #If in the file...
 			
 			#Lists.
-			clauseList = []; #List of clauses in the expression.
 			literalList = []; #List of literals in the expression.
-			populationList = []; #List of populations.
-			breedList = []; #List of breedable canidates.
-			newPopulationList = []; #List of new populations.
-			finalizedPopulationList = []; #List of finalized populations.
+			clauseList = []; #List of clauses in the expression.
 			
 			#Strings.
 			evaluationString = ""; #Holds data after evaluating the file.
@@ -146,17 +142,6 @@ def Main(): #Main function.
 			
 			#Bools.
 			withinClause = "false"; #Used to identify if we're in a clause or not. Starts false.
-			isActive = "true"; #Used for checking parents. Starts true.
-			
-			#Data holders.
-			foundSolution = None; #Found solution variable.
-			solution = None; #Solution variable.
-			generation = None; #Generation variable.
-			populationCounter = None; #Population counter variable.
-			parentOne = None; #First parent variable.
-			parentTwo = None; #Second parent variable.
-			childOne = None; #First child variable.
-			childTwo = None; #Second child variable.
 			
 			for char in string: #For each character in the string, do the following.
 				
@@ -194,8 +179,51 @@ def Main(): #Main function.
 				expressionString += string; #Increment the string data to the expression string variable.
 			
 			#Part two: Generate offspring and mutations.
+			#Lists.
+			populationList = []; #List of populations.
+			newPopulationList = []; #List of new populations.
+			finalizedPopulationList = []; #List of finalized populations.
+			breedList = []; #List of breedable canidates.
+			
+			#Bools.
+			isActive = "true"; #Used for checking parents. Starts true.
+			foundSolution = "false"; #When a solution is found, this variable will become true. Starts false.
+			
+			#Data holders.
+			solution = None; #Solution variable.
+			generation = None; #Generation variable.
+			populationCounter = None; #Population counter variable.
+			parentOne = None; #First parent variable.
+			parentTwo = None; #Second parent variable.
+			childOne = None; #First child variable.
+			childTwo = None; #Second child variable.
+			
 			populationList = GenerateValues(len(literalList), 16) #The population list will equal value(s) from the generate values function.
 			
+			while foundSolution == "false": #While the found solution variable is false, do the following.
+				generation += 1; #Increment the generation variable.
+				for canidate in populationList: #For every canidate in the population list, do the following.
+					if canidate.EvaluateData(expressionString, literalList, canidate) >= 1; #If the canidate's evaluated data is greater than or equal to one...
+						print(canidate.EvaluateData(expressionString, literalList, canidate)); #Print the canidate's evaluated data.
+						solution = canidate; #Solution will now equal the canidates value.
+						foundSolution = "true"; #Found solution will now equal true.
+						break; #Break here.
+						
+				for canidate in populationList: #For every canidate in the population list, do the following.
+					breedList.append(canidate); #Add the canidate to the breed list.
+					
+				populationCounter = len(breedList) #Population counter equals the length of the breed list.
+				for parent in range(0, 4): #For every parent in the defined range, do the following.
+					parentOne = breedList[parent];
+					parentTwo = Canidate("");
+					while isActive == "true":
+						parentTwo = breedList[random.randrange(parent, len(breedList))];
+						if parentTwo in breedList:
+							isActive = "false";
+					childOne = Canidate(parentTwo.InverseOffspring(literalList, AddToList(parentTwo)));
+					childTwo = Canidate(parentOne.InverseOffspring(literalList, AddToList(parentOne)));
+					newPopulationList.append(childOne);
+					newPopulationList.append(childTwo);
 			
 			#Results.
 			#print(literalList); #Displays literals within list.
