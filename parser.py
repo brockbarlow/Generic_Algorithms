@@ -9,78 +9,82 @@ from constructor import *
 
 #Functions.
 def Main(): 
-	#File.
-	file = "CNFExpression.txt" #Name of file. Holds a test cnf expression.
-	inFile = open(file, 'r') #Open and read file.
+	file = "CNFExpression.txt" 
+	inFile = open(file, 'r') 
+	
+	#Lists.
+	literalList = [] 
+	clauseList = [] 
+	populationList = []
+	newPopulationList = []
+	breedList = []
+			
+	#Strings.
+	evaluationString = "" #Holds data after evaluating the file. Used in part one.
+	expressionString = "" #Holds the clause(s) of the expression. Used in part two and at the end of part one.
+			
+	#Bools.
+	withinClause = "false" 
+	isActive = "true"
+			
+	#Data holders.
+	foundSolution = 0
+	solution = None
+	generation = 0
 	
 	#Part one: Parser the file and evaluate the data within.
-	for string in inFile: #For every string in file, do the following.
+	for string in inFile: 
 		
-		if inFile: #If in the file...
+		if inFile: 
 			
-			#Lists.
-			literalList = [] #List of literals in the expression.
-			clauseList = [] #List of clauses in the expression.
-			populationList = []
-			breedList = []
-			newPopulationList = []
-			finalPopulationList = []
+			for char in string: 
+				
+				if char == '(' and withinClause == "false": 
+					withinClause = "true" 
+					evaluationString += '(' 
+				
+				elif char == ' ': 
+					continue 
+				
+				elif char == '?' and withinClause == "true": 
+					evaluationString += '?' 
+				
+				elif char == 'V' and withinClause == "true": 
+					evaluationString += 'V' 
+				
+				elif char == '&': 
+					evaluationString += '&' 
+				
+				elif char == ')' and withinClause == "true": 
+					withinClause = "false" 
+					evaluationString += ')' 
+					clauseList.append(evaluationString) 
+					evaluationString = "" 
+				
+				elif char == '\n': 
+					continue 
+				
+				elif withinClause == "true": 
+					evaluationString += char 
+					
+					if char in literalList: 
+						continue 
+						
+					literalList.append(char) 
 			
-			#Strings.
-			evaluationString = "" #Holds data after evaluating the file.
-			expressionString = "" #Holds the clause(s) of the expression.
+			for string in clauseList: 
+				expressionString += string 
 			
-			#Bools.
-			withinClause = "false" #Used to identify if we're in a clause or not. Starts false.
-			active = "true"
-			
-			#Data holders.
-			foundSolution = 0
-			solution = None
-			generation = 0
-			populationCounter = 0
-			
-			for char in string: #For each character in the string, do the following.
-				
-				if char == '(' and withinClause == "false": #If the char equals an open bracket and is not within the clause...
-					withinClause = "true" #turn withinClause to true.
-					evaluationString += '(' #increment the open bracket to the evaluation string.
-				
-				elif char == ' ': #If the char equals a space...
-					continue #move on to the next character.
-				
-				elif char == '?' and withinClause == "true": #If the char equals a question mark and is within the clause...
-					evaluationString += '?' #increment the question mark to the evaluation string.
-				elif char == 'V' and withinClause == "true": #If the char equals a capital v and is within the clause...
-					evaluationString += 'V' #increment the capital v to the evaluation string.
-				
-				elif char == '&': #If the char equals an ampersand...
-					evaluationString += '&' #increment the ampersand to the evaluation string.
-				
-				elif char == ')' and withinClause == "true": #If the char equals a closed bracket and is within the clause...
-					withinClause = "false" #turn withinClause to false.
-					evaluationString += ')' #increment the closed bracket to the evaluation string.
-					clauseList.append(evaluationString) #add the data from the evaluation string to the clause list.
-					evaluationString = "" #clear the evaluation string.
-				
-				elif char == '\n': #If the char equals a new line...
-					continue #move on to the next character.
-				
-				elif withinClause == "true": #If withinClause is equal to true...
-					evaluationString += char #increment the character to the evaluation string.
-					if char in literalList: #If the character is in the literal list...
-						continue #move on.
-					literalList.append(char) #otherwise, add the character to the literal list.
-			
-			for string in clauseList: #For each string in the clause list, do the following.
-				expressionString += string #Increment the string data to the expression string variable.
+			literalList.sort()
 			
 			#Part two: Generate offspring and mutations.
 			populationList = GenerateRandomValues(len(literalList), 16)
 			
 			while(foundSolution == 0):
 				generation += 1
+				
 				for can in populationList:
+					
 					if can.DataEvaluation(expressionString, literalList, can) >= 1:
 						print(can.DataEvaluation(expressionString, literalList, can))
 						solution = can
@@ -91,49 +95,26 @@ def Main():
 					breedList.append(can)
 					
 				for parent in range(0, 4):
+					
 					parentOne = breedList[parent]
 					parentTwo = Candidate("")
-					while active == "true":
-						parentTwo = breedList[random.randrange(parent, len(breedList))]
-						if parentTwo in breedList:
-							active = "false"
-					childOne = Candidate(parentTwo.InverseFrontOffspring(literalList, AddCandidateToList(parentTwo)))
-					childTwo = Candidate(parentOne.InverseFrontOffspring(literalList, AddCandidateToList(parentOne)))
-					newPopulationList.append(childOne)
-					newPopulationList.append(childTwo)
-					if parentOne in breedList:
-						breedList.remove(parentOne)
-					if parentTwo in breedList:
-						breedList.remove(parentTwo)
-					for can in newPopulationList:
-						dataString = ""
-						for data in can.value:
-							dataString += data
-						can.value = dataString
-						
-				for newCan in newPopulationList:
-					newCan.value = newCan.MutateValues(25)
-					populationList.append(newCan)
 					
-				for can in populationList:
-					if len(finalPopulation) < 10:
-						finalPopulation.append(can)
-					else:
-						for check in finalPopulation:
-							if can.DataEvaluation(expressionString, literalList, can) > check.DataEvaluation(clauseList, literalList, check):
-								check = can
-				populationList = finalPopulation
-				for p in populationList:
-					p.DisplayResults(expressionString, p.DataEvaluation(expressionString, literalList, p))
-								
-			print("Solution: " + solution.value)
-			print("Generation: " + str(generation))
+					while isActive == "true":
+						parentTwo = breedList[random.randrange(parent, len(breedList))]
+						
+						if parentTwo in breedList:
+							isActive = "false"
+							
+					#childOne = Candidate(parentTwo.InverseFrontOffspring(literalList, AddCandidateToList(parentTwo)))
+					#childTwo = Candidate(parentOne.InverseFrontOffspring(literalList, AddCandidateToList(parentOne)))
+					#newPopulationList.append(childOne)
+					#newPopulationList.append(childTwo)
 			
 			#Results.
-			#print(literalList) #Displays literals within list.
-			#print("\n") #Prints a new line.
-			#print(clauseList) #Displays clauses within list.
-			#print("\n") #Prints a new line.
-			#print(expressionString) #Displays the expression within the file.
-			#print("\n") #Prints a new line.
-Main() #End of main function.
+			print("The literals: ", literalList) #Displays literals within list.
+			print("\n") #Prints a new line.
+			print("The clauses: ", clauseList) #Displays clauses within list.
+			print("\n") #Prints a new line.
+			print("The expression in the file: ", expressionString) #Displays the expression within the file.
+			print("\n") #Prints a new line.
+Main() 

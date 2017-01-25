@@ -93,34 +93,10 @@ class Candidate(object):
 				
 		return dataValue
 		
-	def MutateValues(self, chanceValue): #Mutate the values.
-		finalDataList = []
-		dataString = ""
-		
-		for data in self.value:
-		
-			if random.randrange(1, 101, 1) <= chanceValue:
-			
-				if data == '1':
-					finalDataList.append('0')
-					
-				elif data == '0':
-					finalDataList.append('1')
-					
-			else:
-			
-				finalDataList.append(data)
-		
-		for data in finalDataList:
-		
-			dataString += data
-			
-		return dataString
-		
-	def DisplayResults(self, expressionString, fittness): #Display the results to the user.
-		print("Expression: " + expressionString)
+	def DisplayResults(self, variableChar, scoreValue): #Display the results to the user.
+		print("Expression: " + variableChar)
 		print("Value: " + self.value)
-		print("Fittness: " + fittness)
+		print("Fittness score: " + scoreValue)
 		print("\n")
 
 #Functions.
