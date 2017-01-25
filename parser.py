@@ -7,7 +7,8 @@
 import constructor
 from constructor import *
 
-def Main(): #Main function.
+#Functions.
+def Main(): 
 	#File.
 	file = "CNFExpression.txt" #Name of file. Holds a test cnf expression.
 	inFile = open(file, 'r') #Open and read file.
@@ -75,7 +76,7 @@ def Main(): #Main function.
 				expressionString += string #Increment the string data to the expression string variable.
 			
 			#Part two: Generate offspring and mutations.
-			populationList = GenerateValues(len(literalList), 16)
+			populationList = GenerateRandomValues(len(literalList), 16)
 			
 			while(foundSolution == 0):
 				generation += 1

@@ -4,116 +4,160 @@
 #Final due date: 2/1/2017.
 
 #Imports.
-import sys #import system.
-import random #import random.
-import time #import time.
+import sys 
+import random 
+import time 
 
 #Classes.
 class Candidate(object):
-	def __init__(self, string):
+	def __init__(self, string): #Initialize values.
 		dataString = ""
+		
 		for data in string:
 			dataString += data
+			
 		self.value = dataString
 		
-	def InverseFrontOffspring(self, literalList, value):
-		for data in range(len(literalList) / 2, len(literalList)):
-			if value[data] == '0':
-				value[data - (len(literalList) / 2)] = '1'
-			elif value[data] == '1':
-				value[data - (len(literalList) / 2)] = '0'
-		return value
-		
-	def DataEvaluation(self, expressionString, literalList, can):
-		tempString = ""
-		finalString = ""
-		canInverse = 0
-		clauseList = []
+	def DataEvaluation(self, variableChar, variableList, can): #Evaluate the data.
+		valueList = []
+		tempDataString = ""
+		finalDataString = ""
+		canInverse = "false"
 		chromosomeValue = 0
 		
-		for string in expressionString:
+		for string in variableChar:
+		
 			for char in string:
+			
 				if char == ")":
-					tempString += char
-					clauseList.append(tempString)
-					tempString = ""
+					tempDataString += char
+					valueList.append(tempDataString)
+					tempDataString = ""
+					
 				elif char == '&':
 					continue
+					
+				elif char == ' ':
+					continue
+					
+				elif char == '\n':
+					continue
+					
 				else:
+				
 					if char != '?' and char != '(' and char != 'V' and char != '&':
-						tempString += can.value[FindIndex(literalList, char)]
-					else:
-						tempString += char
+						tempDataString += can.value[FindValueIndex(variableList, char)]
 						
-		for string in clauseList:
-			for char in string:
-				if canInverse == 1:
-					if char == '1':
-						finalString += '0'
-					elif char == '0':
-						finalString += '1'
-					canInverse = 0
-				else:
-					if char == '?':
-						canInverse = 1
 					else:
-						finalString += char
-			clauseList[FindIndex(clauseList, string)] = finalString
-			finalString = ""
-			
-		for clause in clauseList:
-			chromosomeValue += eval(clause)
-		return chromosomeValue / float(len(clauseList))
+						tempDataString += char
+						
+		for string in valueList:
 		
-	def MutateValues(self, chanceValue):
-		finalList = []
+			for char in string:
+			
+				if canInverse == "true":
+				
+					if char == '1':
+						finalDataString += '0'
+						
+					elif char == '0':
+						finalDataString += '1'
+						
+					canInverse = "false"
+					
+				else:
+				
+					if char == '?':
+						canInverse = "true"
+						
+					else:
+						finalDataString += char
+						
+			valueList[FindValueIndex(valueList, string)] = finalDataString
+			finalDataString = ""
+			
+		for value in valueList:
+		
+			chromosomeValue += eval(value)
+			
+		return chromosomeValue / float(len(valueList))
+		
+	def InverseFrontOffspring(self, variableList, dataValue): #Inverse the front part of the offspring.
+		for data in range(len(variableList) / 2, len(variableList)):
+		
+			if dataValue[data] == '0':
+				dataValue[data - (len(variableList) / 2)] = '1'
+				
+			elif dataValue[data] == '1':
+				dataValue[data - (len(variableList) / 2)] = '0'
+				
+		return dataValue
+		
+	def MutateValues(self, chanceValue): #Mutate the values.
+		finalDataList = []
 		dataString = ""
 		
 		for data in self.value:
-			if random.randrange(1, 101, 1) <= chanceValue:
-				if data == '1':
-					finalList.append('0')
-				elif data == '0':
-					finalList.append('1')
-			else:
-				finalList.append(data)
 		
-		for data in finalList:
+			if random.randrange(1, 101, 1) <= chanceValue:
+			
+				if data == '1':
+					finalDataList.append('0')
+					
+				elif data == '0':
+					finalDataList.append('1')
+					
+			else:
+			
+				finalDataList.append(data)
+		
+		for data in finalDataList:
+		
 			dataString += data
+			
 		return dataString
 		
-	def DisplayResults(self, expressionString, fittness):
+	def DisplayResults(self, expressionString, fittness): #Display the results to the user.
 		print("Expression: " + expressionString)
 		print("Value: " + self.value)
 		print("Fittness: " + fittness)
 		print("\n")
 
 #Functions.
-def FindIndex(listVariable, caseVariable):
-	int = 0
-	for item in listVariable:
-		if item == caseVariable:
-			return int
-		else:
-			int += 1
-
-def GenerateValues(literalListsLength, max):
-	valuesList = []
+def FindValueIndex(variableList, variableChar): #Find the index of the value(s).
+	intDataHolder = 0
 	
-	for value in range(0, max):
+	for item in variableList:
+		
+		if item == variableChar:
+			return intDataHolder
+		
+		else:
+			intDataHolder += 1
+
+def GenerateRandomValues(variableListLength, maxValue): #Generate random values to use.
+	valueList = []
+	
+	for value in range(0, maxValue):
 		tempDataString = Candidate("")
-		for data in range(0, literalListsLength):
+		
+		for data in range(0, variableListLength):
 			rand = random.randrange(0, 100, 1)
+			
 			if rand < 49:
 				tempDataString.value += '1'
+			
 			else:
 				tempDataString.value += '0'
-		valuesList.append(tempDataString)
-	return valuesList
+				
+		valueList.append(tempDataString)
+		
+	return valueList
 			
-def AddCandidateToList(can): 
-	tempList = [] 
+def AddCandidateToList(can): #Add the candidate to the list.
+	canList = [] 
 	
 	for char in can.value: 
-		tempList.append(char)
-	return tempList
+		canList.append(char)
+		
+	return canList
