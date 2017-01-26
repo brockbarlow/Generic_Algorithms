@@ -1,13 +1,9 @@
 #Question Mark ? = NOT
+
 #Capital V = OR
+
 #Ampersand & = AND
 
 #Open Parentheses ( = BEGIN CLAUSE
+
 #Close Parentheses ) = END CLAUSE
-
-1 = True
-0 = Zero
-
-(1 V 1) = True
-(0 V 0) = False
-(1 V 0) = False
