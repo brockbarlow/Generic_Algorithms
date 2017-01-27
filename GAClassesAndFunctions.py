@@ -4,9 +4,11 @@ import random
 import time 
 
 #Classes.
-class EvaluateFile:
+class EvaluateFile(object):
 	def __init__(self, file):
 		self.ReadFile(file)
+		
+		self.expressionList = []
 		
 	def ReadFile(self, fileName):
 		dataFile = ""
@@ -14,11 +16,11 @@ class EvaluateFile:
 		
 		contentsOfFile = dataFile.read()
 		
-		self.ParserData(contentsOfFile)
+		self.ParseData(contentsOfFile)
 		
 		dataFile.close()
 		
-	def ParserData(self, contentsOfFile):
+	def ParseData(self, contentsOfFile):
 		numberOfAnds = 0
 		numberOfOrs = 0
 		numberOfNots = 0
@@ -78,8 +80,12 @@ class EvaluateFile:
 				
 		for index in clauseList:
 			expressionString += index
+			self.expressionList.append(expressionString)
+			expressionString = ""
 				
 		literalList.sort()
+		
+		self.DisplayResults(literalList, clauseList, expressionString)
 		
 	def DisplayResults(self, literalList, clauseList, expressionString):
 		print("The literals: ", literalList)
@@ -90,5 +96,8 @@ class EvaluateFile:
 		
 		print("The expression in the file: ", expressionString)
 		print("\n")
+		
+	def GetExpressionList(self):
+		return self.expressionList
 
 #Functions.

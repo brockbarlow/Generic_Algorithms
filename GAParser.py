@@ -6,6 +6,6 @@ from GAClassesAndFunctions import *
 def Main():
 	file = "TestFile.txt"
 	
-	parseredFile = EvaluateFile(file)
-	print(parseredFile)
+	parsedFile = EvaluateFile(file)
+	#print(parseredFile)
 Main()
