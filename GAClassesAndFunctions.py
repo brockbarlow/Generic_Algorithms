@@ -47,18 +47,22 @@ class EvaluateFile:
 				
 			elif contentsOfFile[index] == '?' and withinClause == "true":
 				evaluationString += '?'
+				numberOfNots += 1
 			
 			elif contentsOfFile[index] == 'V' and withinClause == "true":
 				evaluationString += 'V'
+				numberOfOrs += 1
 				
 			elif contentsOfFile[index] == '&':
 				evaluationString += '&'
+				numberOfAnds += 1
 				
 			elif contentsOfFile[index] == ')' and withinClause == "true":
 				withinClause = "false"
 				evaluationString += ')'
 				clauseList.append(evaluationString)
 				evaluationString = ""
+				numberOfClauses += 1
 				
 			elif contentsOfFile[index] == '\n':
 				continue
@@ -70,6 +74,7 @@ class EvaluateFile:
 					continue
 					
 				literalList.append(contentsOfFile[index])
+				numberOfLiterals += 1
 				
 		for index in clauseList:
 			expressionString += index
