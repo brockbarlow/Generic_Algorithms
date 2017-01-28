@@ -81,15 +81,19 @@ class EvaluateFile(object):
 		for index in clauseList:
 			expressionString += index
 			self.expressionList.append(expressionString)
-			expressionString = ""
 				
 		literalList.sort()
 		
-		self.DisplayResults(literalList, clauseList, expressionString)
+		self.DisplayResults(numberOfLiterals, literalList, numberOfClauses, clauseList, expressionString, numberOfAnds, numberOfOrs, numberOfNots)
 		
-	def DisplayResults(self, literalList, clauseList, expressionString):
+	def DisplayResults(self, numberOfLiterals, literalList, numberOfClauses, clauseList, expressionString, numberOfAnds, numberOfOrs, numberOfNots):
+		print("The number of literals: ", numberOfLiterals)
+		print("\n")
+		
 		print("The literals: ", literalList)
 		print("\n")
+		
+		print("The number of clauses: ", numberOfClauses)
 		
 		print("The clauses: ", clauseList)
 		print("\n")
@@ -97,7 +101,27 @@ class EvaluateFile(object):
 		print("The expression in the file: ", expressionString)
 		print("\n")
 		
+		print("The number of Ands: ", numberOfAnds)
+		print("\n")
+		
+		print("The number of Ors: ", numberOfOrs)
+		print("\n")
+		
+		print("The number of Nots: ", numberOfNots)
+		print("\n")
+		
 	def GetExpressionList(self):
 		return self.expressionList
 
+class CreatePopulation(object):
+	def __init__(self, newExpressionString):
+		self.currentExpressionString = newExpressionString
+		self.oldExpressionString = currentExpressionString
+		self.fitnessScore = 0
+		self.dictionary = {'a': 1, 'b': 1, 'c': 1, 'd': 1, 'e': 1, 'f': 1,
+						   'g': 1, 'h': 1, 'i': 1, 'j': 1, 'k': 1, 'l': 1,
+						   'm': 1, 'n': 1, 'o': 1, 'p': 1, 'q': 1, 'r': 1,
+						   's': 1, 't': 1, 'u': 1, 'v': 1, 'w': 1, 'x': 1,
+						   'y': 1, 'z': 1}
+		
 #Functions.

@@ -7,5 +7,5 @@ def Main():
 	file = "TestFile.txt"
 	
 	parsedFile = EvaluateFile(file)
-	#print(parseredFile)
+	
 Main()
