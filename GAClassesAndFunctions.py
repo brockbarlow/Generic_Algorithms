@@ -6,9 +6,9 @@ import time
 #Classes.
 class EvaluateFile(object):
 	def __init__(self, file):
-		self.ReadFile(file)
-		
 		self.expressionList = []
+	
+		self.ReadFile(file)
 		
 	def ReadFile(self, fileName):
 		dataFile = ""
