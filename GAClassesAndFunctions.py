@@ -85,7 +85,7 @@ class EvaluateFile(object): #Used to parse the file.
 				
 		literalList.sort()
 		
-		#self.DisplayResults(numberOfLiterals, literalList, numberOfClauses, clauseList, expressionString, numberOfAnds, numberOfOrs, numberOfNots)
+		self.DisplayResults(numberOfLiterals, literalList, numberOfClauses, clauseList, expressionString, numberOfAnds, numberOfOrs, numberOfNots)
 		
 	def DisplayResults(self, numberOfLiterals, literalList, numberOfClauses, clauseList, expressionString, numberOfAnds, numberOfOrs, numberOfNots):
 		print("The number of literals: ", numberOfLiterals)
@@ -114,8 +114,23 @@ class EvaluateFile(object): #Used to parse the file.
 class CreatePopulation(object): #Used to create populations.
 	def __init__(self, newExpressionString):
 		self.currentExpressionString = newExpressionString
-		self.oldExpressionString = currentExpressionString
+		self.oldExpressionString = self.currentExpressionString
+		
+		self.offspringString = ""
+		
 		self.fitnessScore = 0
+		
+		self.dictionary = {'a' : 1, 'b' : 1, 'c' : 1, 'd' : 1, 'e' : 1, 'f' : 1, 'g' : 1, 'h' : 1, 'i' : 1, 'j' : 1, 'k' : 1, 'l' : 1,
+						   'm' : 1, 'n' : 1, 'o' : 1, 'p' : 1, 'q' : 1, 'r' : 1, 's' : 1, 't' : 1, 'u' : 1, 'v' : 1, 'w' : 1, 'x' : 1,
+						   'y' : 1, 'z' : 1}
+		
+		self.parentPopulation = []
+		
+	def GetPopulation(self):
+		return self.currentExpressionString
+		
+	def GetFitnessScore(self):
+		return self.fitnessScore
 		
 class CreateChromosome(object): #Used to create chromosome values.
 	def __init__(self, newClauseString):
