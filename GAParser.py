@@ -7,5 +7,6 @@ def Main():
 	file = "TestFile.txt"
 	
 	parsedFile = EvaluateFile(file)
+	evaluatedList = parsedFile.GetExpressionList()
 	
 Main()
