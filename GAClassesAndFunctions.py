@@ -2,9 +2,10 @@
 import sys 
 import random 
 import time 
+import math
 
 #Classes.
-class EvaluateFile(object):
+class EvaluateFile(object): #Used to parse the file.
 	def __init__(self, file):
 		self.expressionList = []
 	
@@ -110,21 +111,63 @@ class EvaluateFile(object):
 	def GetExpressionList(self):
 		return self.expressionList
 
-class CreatePopulation(object):
+class CreatePopulation(object): #Used to create populations.
 	def __init__(self, newExpressionString):
 		self.currentExpressionString = newExpressionString
 		self.oldExpressionString = currentExpressionString
 		self.fitnessScore = 0
 		
-class CreateChromosome(object):
+class CreateChromosome(object): #Used to create chromosome values.
 	def __init__(self, newClauseString):
 		self.currentClauseString = newClauseString
-		self.oldClauseString = currentClauseString
 		
-	def parseClause(self):
+	def EvaluateClause(self):
+		parsedClause = list(self.currentClauseString)
 		
+		chromosomeValue = 0
+		
+		lengthOfList = len(parsedClause)
+		
+		for index in range(parsedClause):
+		
+			if parsedClause[index - 1] == '(' and parsedClause[index + 1] == ')':
+				chromosomeValue = parsedClause[index]
+			
+			elif parsedClause[index] == '?':
+				chromosomeValue = self.PerformNotOperation(int(parsedClause[index + 1]))
+				chromosomeValue = str(chromosomeValue)
+				parsedClause[index + 1] = chromosomeValue
+				
+			elif parsedClause[index] == 'V' and parsedClause[index + 1] != '?':
+				chromosomeValue = self.PerformOrOperation(int(parsedClause[index - 1]), int(parsedClause[index + 1]))
+			
+			elif parsedClause[index] == '&' and parsedClause[index + 1] != '(':
+				chromosomeValue = self.PerformAndOperation(int(parsedClause[index - 1]), int(parsedClause[index + 1]))
+				
+		self.currentClauseString = str(parsedClause)
+		
+		return int(chromosomeValue)
+		
+	def PerformAndOperation(self, currentLiteralValue, newLiteralValue):
+		if currentLiteralValue == newLiteralValue:
+			return currentLiteralValue
+			
+		else:
+			return 0
+	
+	def PerformOrOperation(self, currentLiteralValue, newLiteralValue):
+		if currentLiteralValue != newLiteralValue:
+			return 1
+			
+		else:
+			return currentLiteralValue
+	
+	def PerformNotOperation(self, newLiteralValue):
+		if newLiteralValue == 1:
+			return 0
+			
+		else:
+			return 1
 		
 	def GetCurrentClause(self):
 		return self.currentClauseString
-		
-#Functions.
